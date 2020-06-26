@@ -1,26 +1,23 @@
-import React, { Component  } from 'react';
-import { getMovies } from '../services/fakeMovieService'
+import React, { Component } from 'react';
+import { getMovies } from '../services/fakeMovieService';
 
 class Movies extends Component {
-    state = { 
-        movies: getMovies()
-    }
-    
+	state = {
+		movies: getMovies(),
+	};
 
+	handleDelete = (movie) => {
+		const movies = this.state.movies.filter((m) => m._id !== movie._id);
+		this.setState({ movies });
+	};
 
-    handleDelete = (movie) => {
-        const movies = this.state.movies.filter(m => m._id !== movie._id)
-        this.setState({ movies })
-    }
+	render() {
+		const { length: count } = this.state.movies;
+		if (count === 0) return <p>There are no movies in the database</p>;
 
-	render() { 
-		const { length: count } = this.state.movies
-        if (count === 0)
-            return <p>There are no movies in the database</p>
-        
-        return (
+		return (
 			<React.Fragment>
-				<p>Showing {count} movies in the database</p>
+				<p>Showing {count} Movies in the Database</p>
 				<table className="table">
 					<thead>
 						<tr>
@@ -32,7 +29,7 @@ class Movies extends Component {
 						</tr>
 					</thead>
 					<tbody>
-						{this.state.movies.map(movie => (
+						{this.state.movies.map((movie) => (
 							<tr key={movie._id}>
 								<td>{movie.title}</td>
 								<td>{movie.genre.name}</td>
@@ -51,8 +48,8 @@ class Movies extends Component {
 					</tbody>
 				</table>
 			</React.Fragment>
-				);
-    }
+		);
+	}
 }
- 
+
 export default Movies;
